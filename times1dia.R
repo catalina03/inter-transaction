@@ -1,6 +1,11 @@
- rm(list=ls())
+rm(list=ls())
 
-data <- read.csv2("GASNAT2.csv",sep=",")
+##Conexion a Dropbox
+camino1="C:/Users/A79947917/Dropbox/Volatilidad (1)/MKT Quality/Trading Halts_Castro/inter-transaction"
+
+##Local
+#camino1="C:/R/TermStructure"
+data <- read.csv2(paste(camino1,"/ECOPETL2.csv",sep=""),sep=",")
 data <- data.frame(subset(data,data$tipo=="t",1:9))
 dias <- data.frame(unique(data$fecha))
 
