@@ -33,15 +33,15 @@ ts = function(nameshare){
     for ( j in 1:( length( x1$timestamp )-1 ) ) {
       x [j,1] = as.numeric ( difftime ( x1$timestamp[j],x1$timestamp[j+1],units = "mins" ) )
       x <- abs(x)
-      y <- paste(dias[i,],"AVAL",".csv",sep="")
+      y <- paste(nameshare,dias[i,],".csv",sep="")
     
-      write.table ( x,file=paste(dias[i,],nameshare,".csv",sep=""),row.names=FALSE )
+      write.table ( x,file=paste(nameshare,dias[i,],".csv",sep=""),row.names=FALSE )
       
     }
   }
   
   
-  dias2 <- paste(dias[,1],nameshare,".csv",sep="")
+  dias2 <- paste(nameshare,dias[,1],".csv",sep="")
   time <- lapply(dias2,read.csv)
   
   t <- unlist(time,use.names = FALSE)
@@ -50,10 +50,10 @@ ts = function(nameshare){
   
   m <- median(t)
   t <- c(t,m)
-  write.table(t,paste("frecuencia",nameshare,".csv",sep=""),sep=",",row.names = FALSE)
-  write.table(m,paste("mediana",nameshare,".csv",sep=""),sep=",",row.names = FALSE)
+  write.table(t,paste(nameshare,"frecuencia",".csv",sep=""),sep=",",row.names = FALSE)
+  write.table(m,paste(nameshare,"mediana",".csv",sep=""),sep=",",row.names = FALSE)
   
-  jpeg(filename=paste("complete",nameshare,".jpeg",sep="") )
+  jpeg(filename=paste(nameshare,"complete",".jpeg",sep="") )
   hist(t,main=paste("Histogram of",nameshare),xlab="minutes between transactions")
   dev.off()
   

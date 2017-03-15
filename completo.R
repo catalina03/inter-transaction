@@ -7,5 +7,5 @@ source("ts.r")
 camino2="C:/Users/catac/Dropbox/RIntraday/Sin ceros falsos"
   
 lstsb <- read.csv2(paste(camino2,"/Acciones.csv",sep=""), header=TRUE)
-lstsb <- data.frame(paste(lstsb[,1],"2",".csv",sep=""))
+lstsb <- data.frame(paste(camino2,"/",lstsb[,1],"2",".csv",sep=""))
 mtable=apply(lstsb,1,ts)
