@@ -2,14 +2,29 @@ ts = function(nameshare){
 
   data <- read.csv2(nameshare,sep=",")
   data <- data.frame(subset(data,data$tipo=="t",1:9))
-  fecha <- data$fecha
-  dias <- data.frame(unique(fecha[duplicated(fecha)]))
-  
+    
   timestamp <- paste(data$fecha, data$hora, sep=" ")
   timestamp <- paste(timestamp, data$minuto, data$segundo, sep=":")
   
   timestamp <- strptime(timestamp,format="%Y-%m-%d %H:%M:%S")
   data <- data.frame(data$fecha, timestamp, data$nombre,data$tipo,data$precio,data$volumen)
+  
+  x=0
+  
+  for (i in 1:(length(data$timestamp)-1)) {
+    if ( data$timestamp[i]==data$timestamp[i+1] & data$data.precio[i]==data$data.precio[i+1] ) {
+      x = (x+1)
+    }  
+  }
+  
+  for ( i in 1:(length(data$timestamp)-x-1) ) {
+    while ( data$timestamp[i] == data$timestamp[i+1] & data$data.precio[i] == data$data.precio[i+1] ) {
+      data <- data[-(i+1),]
+    }
+  }
+  
+  fecha <- data$data.fecha
+  dias <- data.frame(unique(fecha[duplicated(fecha)]))
   
   
     for (i in 1:length(dias[,1])) {
@@ -33,17 +48,16 @@ ts = function(nameshare){
   
   hist(t)
   
-  t2 <- subset(t,t<= ( median(t)+3*mad(t) ))
-  hist(t2,main=paste("Histogram of",nameshare),xlab="minutes between transactions")
-  
-  
+  m <- median(t)
+  t <- c(t,m)
   write.table(t,paste("frecuencia",nameshare,".csv",sep=""),sep=",",row.names = FALSE)
+  write.table(m,paste("mediana",nameshare,".csv",sep=""),sep=",",row.names = FALSE)
   
   jpeg(filename=paste("complete",nameshare,".jpeg",sep="") )
   hist(t,main=paste("Histogram of",nameshare),xlab="minutes between transactions")
   dev.off()
   
-  jpeg(filename=paste("truncated",nameshare,".jpeg",sep="") )
-  hist(t2,main=paste("Truncated histogram of",nameshare),xlab="minutes between transactions")
-  dev.off()
-}
+  #t2 <- subset(t,t<= ( median(t)+3*mad(t) ))
+  #hist(t2,main=paste("Histogram of",nameshare),xlab="minutes between transactions")
+ 
+  }
