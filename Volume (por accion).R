@@ -26,7 +26,13 @@ volume5min<-period.apply(as.numeric(volume[,"data.volumen"]),INDEX=p5min, FUN=su
 #fecha <- as.matrix(strftime(index(volume[p5min]), format = "%Y-%m-%d"))
 #volume5min<-cbind(fecha,volume5min)
 volume5min <- xts(volume5min,order.by =index(volume[p5min]))
-vol <- split.xts(volume5min,"days")
+sx1 <- rbind(volume5min["2010-03-14/2010-11-07"],volume5min["2011-03-13/2011-11-06"],volume5min["2012-03-11/2010-11-04"])
+sx2 <- rbind(volume5min["2010-11-08/2011-03-12"],volume5min["2011-11-07/2012-03-10"])
+index(sx1) <- index(sx1)+3600
+
+volume <- rbind(sx1,sx2)
+
+vol <- split.xts(volume,"days")
 
 for ( i in 1:length(dias[,1])){
   dias2 <- paste(dias[i,1],"PREC.csv")
