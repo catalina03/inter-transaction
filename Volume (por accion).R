@@ -21,7 +21,6 @@ data1 <- data.frame(data$fecha, timestamp, data$nombre,data$tipo,data$precio,dat
 volume=xts( data1[,c(3,4,5,6)],order.by =data1$timestamp, tzone = "America/Chicago") #misma q bogota Mayo
 p5min<-endpoints(volume, on="minutes",k=5)
 volume5min<-period.apply(as.numeric(volume[,"data.volumen"]),INDEX=p5min, FUN=sum)
-spread5min<-period.apply(as.numeric(volume[,"data.price"]),INDEX=p5min, FUN=mean)
 
 
 #fecha <- as.matrix(strftime(index(volume[p5min]), format = "%Y-%m-%d"))
