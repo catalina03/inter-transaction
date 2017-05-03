@@ -22,9 +22,6 @@ volume=xts( data1[,c(3,4,5,6)],order.by =data1$timestamp, tzone = "America/Chica
 p5min<-endpoints(volume, on="minutes",k=5)
 volume5min<-period.apply(as.numeric(volume[,"data.volumen"]),INDEX=p5min, FUN=sum)
 
-
-#fecha <- as.matrix(strftime(index(volume[p5min]), format = "%Y-%m-%d"))
-#volume5min<-cbind(fecha,volume5min)
 volume5min <- xts(volume5min,order.by =index(volume[p5min]))
 #sx1 <- rbind(volume5min["2010-03-14/2010-11-07"],volume5min["2011-03-13/2011-11-06"],volume5min["2012-03-11/2010-11-04"])
 #sx2 <- rbind(volume5min["2010-11-08/2011-03-12"],volume5min["2011-11-07/2012-03-10"])
